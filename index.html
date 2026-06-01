@@ -1,6 +1,763 @@
-<html>
-  <body>
-    <h1>Home</h1>
-    <p>Test test</p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexey — Senior WPF / .NET Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080b10;--bg2:#0d1117;--bg3:#111820;
+  --surface:#131c26;--surface2:#1a2535;
+  --accent:#00c8a0;--accent2:#0077ff;
+  --text:#e8edf3;--muted:#6b7e94;--border:#1e2d3d;
+  --mono:'JetBrains Mono',monospace;--sans:'Sora',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,200,160,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,160,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+section,nav,footer,div{position:relative;z-index:1}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1rem 4rem;border-bottom:1px solid var(--border);background:rgba(8,11,16,.88);backdrop-filter:blur(12px)}
+.nav-logo{font-family:var(--mono);font-size:14px;color:var(--accent);letter-spacing:.05em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;letter-spacing:.04em;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:#000;padding:.45rem 1.2rem;border-radius:4px;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.03em;transition:opacity .2s}
+.nav-cta:hover{opacity:.85}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 4rem 4rem;max-width:1200px;margin:0 auto}
+.hero-tag{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+.hero-tag::before{content:'';width:32px;height:1px;background:var(--accent)}
+h1{font-size:clamp(2.4rem,5vw,4.2rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:1.5rem}
+h1 span{color:var(--accent)}
+.hero-sub{font-size:1.15rem;color:var(--muted);max-width:580px;margin-bottom:2.5rem;line-height:1.8}
+.hero-stats{display:flex;gap:3rem;margin-bottom:3rem}
+.stat-val{font-family:var(--mono);font-size:2rem;font-weight:500;color:var(--text);display:block}
+.stat-label{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:.2rem}
+.hero-actions{display:flex;gap:1rem;align-items:center}
+.btn-primary{background:var(--accent);color:#000;padding:.7rem 1.8rem;border-radius:4px;font-size:14px;font-weight:600;text-decoration:none;letter-spacing:.03em;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-primary:hover{background:#00e0b4;transform:translateY(-1px)}
+.btn-ghost{color:var(--muted);font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:color .2s}
+.btn-ghost:hover{color:var(--text)}
+.btn-ghost::after{content:'→';transition:transform .2s}
+.btn-ghost:hover::after{transform:translateX(4px)}
+.ai-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,119,255,.12);border:1px solid rgba(0,119,255,.3);color:#4d9fff;padding:.35rem 1rem;border-radius:20px;font-size:12px;font-family:var(--mono);letter-spacing:.05em;margin-top:1rem}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:#4d9fff;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+
+/* ABOUT */
+.about-section{padding:6rem 4rem;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.about-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:4rem;align-items:center}
+.about-photo-wrap{display:flex;flex-direction:column;align-items:center;gap:1.25rem}
+.about-photo{width:160px;height:160px;border-radius:50%;border:2px solid var(--accent);overflow:hidden;background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative}
+.about-photo img{width:100%;height:100%;object-fit:cover}
+.photo-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--muted)}
+.photo-placeholder-icon{font-size:2.5rem;opacity:.4}
+.photo-placeholder-text{font-family:var(--mono);font-size:10px;letter-spacing:.08em;opacity:.5;text-align:center;padding:0 .5rem}
+.about-available{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,200,160,.08);border:1px solid rgba(0,200,160,.25);color:var(--accent);padding:.3rem .9rem;border-radius:20px;font-size:11px;font-family:var(--mono)}
+.about-avail-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+.about-text h2{font-size:clamp(1.5rem,2.5vw,2rem);font-weight:700;letter-spacing:-.02em;margin-bottom:1.25rem}
+.about-text h2 span{color:var(--accent)}
+.about-text p{color:var(--muted);font-size:.95rem;line-height:1.9;margin-bottom:1rem}
+.about-text p:last-child{margin-bottom:0}
+.about-highlights{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem}
+.about-hl{background:var(--surface);border:1px solid var(--border);padding:.35rem .9rem;border-radius:3px;font-size:.78rem;font-family:var(--mono);color:var(--muted)}
+
+/* SECTIONS */
+.section{padding:6rem 4rem;max-width:1200px;margin:0 auto}
+.section-full{padding:6rem 4rem;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-tag{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.14em;text-transform:uppercase;margin-bottom:1rem}
+h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem}
+.section-lead{color:var(--muted);max-width:540px;margin-bottom:3.5rem;font-size:.95rem}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--border)}
+.service-card{background:var(--bg);padding:2.5rem;transition:background .2s}
+.service-card:hover{background:var(--surface)}
+.service-num{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em;margin-bottom:1.5rem}
+.service-card h3{font-size:1.15rem;font-weight:600;margin-bottom:1rem;letter-spacing:-.01em}
+.service-card p{font-size:.875rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem}
+.service-list{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.service-list li{font-size:.8rem;color:var(--muted);padding-left:1.2rem;position:relative}
+.service-list li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.7rem}
+
+/* PORTFOLIO */
+.portfolio-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5px;background:var(--border);margin-top:3rem}
+.portfolio-item{background:var(--bg);overflow:hidden;cursor:default;transition:background .2s}
+.portfolio-item:hover{background:var(--surface)}
+.portfolio-item:hover .portfolio-img-overlay{opacity:1}
+.portfolio-img{width:100%;height:220px;overflow:hidden;position:relative}
+.portfolio-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.portfolio-item:hover .portfolio-img img{transform:scale(1.03)}
+.portfolio-img-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem}
+.portfolio-img-overlay{position:absolute;inset:0;background:rgba(0,200,160,.06);border:2px solid transparent;transition:opacity .3s;opacity:0;pointer-events:none}
+.pimg-icon{font-size:2rem;opacity:.2}
+.pimg-label{font-family:var(--mono);font-size:11px;color:var(--muted);opacity:.6;letter-spacing:.08em}
+.portfolio-body{padding:1.75rem}
+.portfolio-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.9rem}
+.ptag{font-family:var(--mono);font-size:10px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:.2rem .6rem;border-radius:2px;letter-spacing:.05em;text-transform:uppercase}
+.portfolio-body h4{font-size:1rem;font-weight:600;margin-bottom:.5rem}
+.portfolio-body p{font-size:.82rem;color:var(--muted);line-height:1.75}
+.portfolio-meta{display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border)}
+.portfolio-client{font-family:var(--mono);font-size:11px;color:var(--accent)}
+.portfolio-year{font-family:var(--mono);font-size:11px;color:var(--muted)}
+/* wide item */
+.portfolio-item.wide{grid-column:span 2}
+.portfolio-item.wide .portfolio-img{height:280px}
+
+/* AI SECTION */
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.ai-features{display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem}
+.ai-feat{display:flex;gap:1.25rem;align-items:flex-start}
+.ai-icon{width:36px;height:36px;background:rgba(0,200,160,.08);border:1px solid rgba(0,200,160,.2);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.ai-feat h4{font-size:.9rem;font-weight:600;margin-bottom:.3rem}
+.ai-feat p{font-size:.82rem;color:var(--muted);line-height:1.7}
+.ai-terminal{background:var(--bg3);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.terminal-bar{background:var(--surface);padding:.65rem 1rem;display:flex;gap:.5rem;align-items:center}
+.t-dot{width:10px;height:10px;border-radius:50%}
+.t-dot:nth-child(1){background:#ff5f57}
+.t-dot:nth-child(2){background:#febc2e}
+.t-dot:nth-child(3){background:#28c840}
+.terminal-code{padding:1.5rem;font-family:var(--mono);font-size:12px;line-height:2;color:var(--muted)}
+.tc-comment{color:#3d5066}.tc-key{color:#4d9fff}.tc-val{color:var(--accent)}.tc-str{color:#e8a87c}
+
+/* ARCH */
+.arch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:3rem}
+.arch-card{background:var(--bg2);padding:1.75rem}
+.arch-title{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:500;margin-bottom:.75rem}
+.arch-desc{font-size:.82rem;color:var(--muted);line-height:1.7}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.project-card{background:var(--bg);padding:2rem;transition:background .2s}
+.project-card:hover{background:var(--surface)}
+.project-tag{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.75rem}
+.project-card h4{font-size:.95rem;font-weight:600;margin-bottom:.5rem}
+.project-card p{font-size:.8rem;color:var(--muted);line-height:1.7}
+.project-client{margin-top:1rem;font-family:var(--mono);font-size:11px;color:var(--accent)}
+
+/* TESTIMONIALS */
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--border);margin-top:3rem}
+.tcard{background:var(--bg2);padding:2rem;display:flex;flex-direction:column;gap:1.25rem}
+.tcard-stars{display:flex;gap:3px}
+.tstar{color:var(--accent);font-size:13px}
+.tcard-text{font-size:.875rem;color:var(--muted);line-height:1.85;font-style:italic;flex:1}
+.tcard-text::before{content:'\201C';color:var(--accent);font-size:1.4rem;font-style:normal;line-height:0;vertical-align:-.3rem;margin-right:.2rem}
+.tcard-sep{height:1px;background:var(--border)}
+.tcard-author{display:flex;align-items:center;gap:.875rem}
+.tcard-avatar{width:38px;height:38px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:500;color:var(--accent);border:1px solid var(--border);flex-shrink:0}
+.tcard-name{font-size:.875rem;font-weight:600;line-height:1.3}
+.tcard-meta{font-size:.75rem;color:var(--muted);font-family:var(--mono)}
+.tcard-upwork{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--muted);border:1px solid var(--border);padding:.2rem .5rem;border-radius:2px}
+.testimonials-note{text-align:center;margin-top:2rem;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.testimonials-note a{color:var(--accent);text-decoration:none}
+.testimonials-note a:hover{text-decoration:underline}
+
+/* STACK */
+.stack-section{padding:5rem 4rem;background:var(--bg3);border-top:1px solid var(--border)}
+.stack-inner{max-width:1200px;margin:0 auto}
+.stack-row{margin-bottom:2.5rem}
+.stack-row-label{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.stack-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.tag{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.35rem .9rem;border-radius:3px;font-size:.8rem;font-family:var(--mono);letter-spacing:.03em;transition:border-color .2s}
+.tag:hover{border-color:var(--accent)}
+.tag.accent{border-color:rgba(0,200,160,.3);color:var(--accent)}
+
+/* INDUSTRIES */
+.ind-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+.ind-tag{background:transparent;border:1px solid var(--border);color:var(--muted);padding:.4rem 1rem;border-radius:20px;font-size:.78rem;transition:all .2s}
+.ind-tag:hover{border-color:var(--accent);color:var(--text)}
+
+/* CONTACT */
+.contact-section{padding:8rem 4rem;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.contact-links{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
+.contact-link{display:flex;align-items:center;gap:1rem;padding:1.25rem 1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;text-decoration:none;color:var(--text);transition:all .2s}
+.contact-link:hover{border-color:var(--accent);background:var(--surface2)}
+.contact-link-icon{width:36px;height:36px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.contact-link-label{font-size:.82rem;color:var(--muted);margin-bottom:.15rem}
+.contact-link-val{font-size:.9rem;font-weight:500}
+.contact-link-arrow{margin-left:auto;color:var(--muted);transition:transform .2s}
+.contact-link:hover .contact-link-arrow{transform:translateX(4px);color:var(--accent)}
+.contact-note{margin-top:2rem;font-size:.82rem;color:var(--muted);line-height:1.8}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify-content:space-between;align-items:center}
+.footer-mono{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+/* FADE IN */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.divider{height:1px;background:var(--border)}
+
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .hero,.section{padding-left:1.5rem;padding-right:1.5rem}
+  .section-full .section-inner,.about-inner,.contact-section{padding-left:1.5rem;padding-right:1.5rem}
+  .about-inner{grid-template-columns:1fr;text-align:center}
+  .about-photo-wrap{margin:0 auto}
+  .about-highlights{justify-content:center}
+  .services-grid,.arch-grid,.projects-grid,.testimonials-grid{grid-template-columns:1fr}
+  .portfolio-grid{grid-template-columns:1fr}
+  .portfolio-item.wide{grid-column:span 1}
+  .ai-grid,.contact-section{grid-template-columns:1fr;gap:2rem}
+  .hero-stats{gap:2rem}
+  .stack-section{padding:4rem 1.5rem}
+  footer{padding:1.5rem;flex-direction:column;gap:.75rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">perfolancer.com</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="https://www.upwork.com/freelancers/~016371ebdd8af72a2b" target="_blank">Hire on Upwork ↗</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero fade-in">
+  <div class="hero-tag">Available for projects</div>
+  <h1>Senior <span>WPF / .NET</span><br>Desktop Developer</h1>
+  <p class="hero-sub">I build Windows desktop applications that run in production — industrial HMI, enterprise dashboards, kiosks, and data-heavy tools. AI-augmented workflow: faster delivery, production-grade quality.</p>
+  <div class="hero-stats">
+    <div><span class="stat-val">12+</span><span class="stat-label">Years experience</span></div>
+    <div><span class="stat-val">12k+</span><span class="stat-label">Upwork hours</span></div>
+    <div><span class="stat-val">30+</span><span class="stat-label">Production projects</span></div>
+  </div>
+  <div class="hero-actions">
+    <a class="btn-primary" href="https://www.upwork.com/freelancers/~016371ebdd8af72a2b" target="_blank">View Upwork Profile ↗</a>
+    <a class="btn-ghost" href="#contact">Get in touch</a>
+  </div>
+  <div class="ai-badge"><span class="ai-dot"></span> AI-Augmented — Claude Code · GitHub Copilot</div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="about-section fade-in">
+  <div class="about-inner">
+    <div class="about-photo-wrap">
+      <div class="about-photo">
+        <!-- Replace src with your photo path, e.g. src="photo.jpg" -->
+        <div class="photo-placeholder">
+          <span class="photo-placeholder-icon">👤</span>
+          <span class="photo-placeholder-text">Replace with<br>your photo</span>
+        </div>
+      </div>
+      <div class="about-available"><span class="about-avail-dot"></span> Available now</div>
+    </div>
+    <div class="about-text">
+      <h2>Hi, I'm <span>Alexey</span> 👋</h2>
+      <p>I'm a senior software developer with 12+ years of experience building professional Windows desktop applications. I work with C#, .NET, and WPF — and I genuinely enjoy what I do. Complex UI challenges, industrial control systems, data-heavy enterprise tools — this is my everyday.</p>
+      <p>Based in Spain, working with clients across the US and Europe. I've delivered production software for companies like SafeFleet, Winshuttle (now Precisely), Cloudmed, and Adaura Technologies — whose customers include NASA, Google, Intel, and MIT.</p>
+      <p>In 2024–2025 I integrated AI-assisted development into my daily workflow — Claude Code and GitHub Copilot at every stage. The result is measurable: faster delivery, fewer bugs, cleaner architecture. Same budget, better outcome for the client.</p>
+      <div class="about-highlights">
+        <span class="about-hl">📍 Spain / EU timezone</span>
+        <span class="about-hl">🌐 EN · RU · ES</span>
+        <span class="about-hl">⚡ US timezone overlap</span>
+        <span class="about-hl">✅ Top Rated on Upwork</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div id="services" class="divider"></div>
+<div class="section-full">
+<div class="section-inner fade-in">
+  <div class="section-tag">What I build</div>
+  <h2>Three areas of expertise</h2>
+  <p class="section-lead">From scratch or on top of an existing codebase — Windows-native, cross-platform, or AI-powered.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01 / WPF Desktop</div>
+      <h3>Windows Desktop Applications</h3>
+      <p>Complex WPF/XAML applications with MVVM architecture. From industrial control panels to enterprise dashboards — if it runs on Windows, I build it right.</p>
+      <ul class="service-list">
+        <li>WPF/XAML from scratch or codebase takeover</li>
+        <li>Custom controls, DataGrids, Charts, Gauges</li>
+        <li>Multi-screen wizards, touch &amp; kiosk UI</li>
+        <li>WinForms → WPF migration</li>
+        <li>.NET Framework → .NET 8/9/10 upgrade</li>
+        <li>Industrial HMI, SCADA, hardware integration</li>
+        <li>UI/UX redesign — Figma → pixel-perfect XAML</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02 / Cross-Platform</div>
+      <h3>Multi-Platform .NET Apps</h3>
+      <p>One C# codebase targeting Windows, macOS, Linux, iOS, and Android. Deep WPF/XAML foundation makes cross-platform frameworks a natural extension.</p>
+      <ul class="service-list">
+        <li>Avalonia UI — desktop: Win / macOS / Linux</li>
+        <li>.NET MAUI — iOS, Android, Windows, macOS</li>
+        <li>Uno Platform — all platforms incl. WebAssembly</li>
+        <li>Xamarin → MAUI migration</li>
+        <li>WPF → Avalonia for cross-platform reach</li>
+        <li>Offline-first architecture, field tools</li>
+        <li>REST/gRPC API integration</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03 / AI Integration</div>
+      <h3>AI-Native Desktop Tools</h3>
+      <p>Add AI capabilities to existing applications or build AI-native tools from scratch — no cloud lock-in, no separate Python team needed.</p>
+      <ul class="service-list">
+        <li>Chat assistant embedded in your app</li>
+        <li>Document intelligence &amp; data extraction</li>
+        <li>Semantic search over your knowledge base</li>
+        <li>Anomaly detection &amp; production forecasting</li>
+        <li>Voice control for industrial environments</li>
+        <li>Private / on-premise LLM — data stays local</li>
+        <li>Semantic Kernel, ML.NET, ONNX Runtime</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- PORTFOLIO -->
+<div id="portfolio" class="section fade-in">
+  <div class="section-tag">Portfolio</div>
+  <h2>Selected screenshots</h2>
+  <p class="section-lead">Real projects, real UIs. Replace placeholder images with actual screenshots — same layout, instant upgrade.</p>
+  <div class="portfolio-grid">
+
+    <div class="portfolio-item wide">
+      <div class="portfolio-img" style="background:linear-gradient(135deg,#0d1f2d,#0a2a1e)">
+        <!-- Replace with: <img src="screenshots/safelink.png" alt="SafeLink Service Tool"> -->
+        <div class="portfolio-img-placeholder">
+          <span class="pimg-icon">🖥️</span>
+          <span class="pimg-label">screenshot · safelink-service-tool.png</span>
+        </div>
+        <div class="portfolio-img-overlay"></div>
+      </div>
+      <div class="portfolio-body">
+        <div class="portfolio-tags">
+          <span class="ptag">WPF</span><span class="ptag">Hardware</span><span class="ptag">Industrial</span>
+        </div>
+        <h4>SafeLink Service Tool</h4>
+        <p>Update and diagnostic software for firefighting and emergency medical equipment. Real-time hardware communication, fault diagnostics, firmware update pipeline, and multi-device management — built for field technicians working under pressure.</p>
+        <div class="portfolio-meta">
+          <span class="portfolio-client">SafeFleet — USA</span>
+          <span class="portfolio-year">2022</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-item">
+      <div class="portfolio-img" style="background:linear-gradient(135deg,#0d1a2e,#0a1528)">
+        <div class="portfolio-img-placeholder">
+          <span class="pimg-icon">📡</span>
+          <span class="pimg-label">screenshot · adaura-dashboard.png</span>
+        </div>
+        <div class="portfolio-img-overlay"></div>
+      </div>
+      <div class="portfolio-body">
+        <div class="portfolio-tags">
+          <span class="ptag">WPF</span><span class="ptag">RF Control</span><span class="ptag">Dashboard</span>
+        </div>
+        <h4>Adaura Control Dashboard</h4>
+        <p>Desktop app for intuitive control of Programmable RF Attenuators. Customers include Google, Intel, MIT, NASA, and Verizon. Precision instrument UI with real-time feedback.</p>
+        <div class="portfolio-meta">
+          <span class="portfolio-client">Adaura Technologies — USA</span>
+          <span class="portfolio-year">2021</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-item">
+      <div class="portfolio-img" style="background:linear-gradient(135deg,#1a1200,#2a1a00)">
+        <div class="portfolio-img-placeholder">
+          <span class="pimg-icon">🏪</span>
+          <span class="pimg-label">screenshot · panipro-pos.png</span>
+        </div>
+        <div class="portfolio-img-overlay"></div>
+      </div>
+      <div class="portfolio-body">
+        <div class="portfolio-tags">
+          <span class="ptag">WPF</span><span class="ptag">Touch UI</span><span class="ptag">POS</span>
+        </div>
+        <h4>Panipro WinWin POS</h4>
+        <p>POS terminal software for retail and catering with an intuitive touch-screen interface. Multi-currency, multi-language, high-throughput transaction processing.</p>
+        <div class="portfolio-meta">
+          <span class="portfolio-client">Panipro Software — Switzerland</span>
+          <span class="portfolio-year">2020</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-item">
+      <div class="portfolio-img" style="background:linear-gradient(135deg,#0a1a2e,#001a3a)">
+        <div class="portfolio-img-placeholder">
+          <span class="pimg-icon">📊</span>
+          <span class="pimg-label">screenshot · winshuttle-studio.png</span>
+        </div>
+        <div class="portfolio-img-overlay"></div>
+      </div>
+      <div class="portfolio-body">
+        <div class="portfolio-tags">
+          <span class="ptag">WPF</span><span class="ptag">SAP</span><span class="ptag">Enterprise</span>
+        </div>
+        <h4>Winshuttle Automate Studio</h4>
+        <p>MS Office-like suite of powerful data management tools for automated SAP data processing. Complex grid interfaces, macro engine, multi-format import/export.</p>
+        <div class="portfolio-meta">
+          <span class="portfolio-client">Winshuttle / Precisely — USA</span>
+          <span class="portfolio-year">2019</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-item">
+      <div class="portfolio-img" style="background:linear-gradient(135deg,#1a0a0a,#2a0d0d)">
+        <div class="portfolio-img-placeholder">
+          <span class="pimg-icon">🖨️</span>
+          <span class="pimg-label">screenshot · wepa-kiosk.png</span>
+        </div>
+        <div class="portfolio-img-overlay"></div>
+      </div>
+      <div class="portfolio-body">
+        <div class="portfolio-tags">
+          <span class="ptag">WPF</span><span class="ptag">Kiosk</span><span class="ptag">Touch</span>
+        </div>
+        <h4>Wēpa Printing Kiosk</h4>
+        <p>Touch-based kiosk app for printing at US universities and public places. Unattended operation, fault-tolerant, high-traffic. Redesigned UX from ground up.</p>
+        <div class="portfolio-meta">
+          <span class="portfolio-client">Wēpa Now — USA</span>
+          <span class="portfolio-year">2018</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-item">
+      <div class="portfolio-img" style="background:linear-gradient(135deg,#001a10,#002a1a)">
+        <div class="portfolio-img-placeholder">
+          <span class="pimg-icon">⚙️</span>
+          <span class="pimg-label">screenshot · variobend-touch.png</span>
+        </div>
+        <div class="portfolio-img-overlay"></div>
+      </div>
+      <div class="portfolio-body">
+        <div class="portfolio-tags">
+          <span class="ptag">WPF</span><span class="ptag">Industrial HMI</span><span class="ptag">CNC</span>
+        </div>
+        <h4>Variobend V-Touch</h4>
+        <p>Bending machine control software with industrial touch UI. Real-time G-code visualization, precision motion control, operator safety interlocks.</p>
+        <div class="portfolio-meta">
+          <span class="portfolio-client">ASCO Biegetechnik — Germany</span>
+          <span class="portfolio-year">2017</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- AI SECTION -->
+<div class="section-full fade-in">
+<div class="section-inner">
+  <div class="section-tag">AI-Augmented Development</div>
+  <h2>Why AI in the workflow matters</h2>
+  <p class="section-lead">Not a buzzword. A measurable shift in delivery speed, code quality, and reliability.</p>
+  <div class="ai-grid">
+    <div>
+      <div class="ai-features">
+        <div class="ai-feat">
+          <div class="ai-icon">⚡</div>
+          <div><h4>Faster delivery</h4><p>Architecture decisions, XAML generation, boilerplate, and unit tests are AI-assisted at every stage. Same scope ships sooner.</p></div>
+        </div>
+        <div class="ai-feat">
+          <div class="ai-icon">🔍</div>
+          <div><h4>Fewer bugs in production</h4><p>AI-powered code review catches issues before they reach you. Edge cases missed in manual review are surfaced automatically.</p></div>
+        </div>
+        <div class="ai-feat">
+          <div class="ai-icon">🏗</div>
+          <div><h4>Cleaner architecture</h4><p>AI assists with refactoring toward Clean Architecture — not just writing new code, but improving what's already there.</p></div>
+        </div>
+        <div class="ai-feat">
+          <div class="ai-icon">🤖</div>
+          <div><h4>Claude Code + GitHub Copilot</h4><p>Integrated into Visual Studio and the terminal. A peer reviewing every commit — not a chatbot for copy-paste.</p></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="ai-terminal">
+        <div class="terminal-bar">
+          <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
+          <span style="margin-left:.75rem;font-family:var(--mono);font-size:11px;color:var(--muted)">claude-code — project review</span>
+        </div>
+        <div class="terminal-code">
+<span class="tc-comment">// Architecture review output</span>
+<br><span class="tc-key">✓ </span><span class="tc-val">Clean Architecture layers</span><span style="color:#3d5066"> — OK</span>
+<br><span class="tc-key">✓ </span><span class="tc-val">DI container wiring</span><span style="color:#3d5066"> — OK</span>
+<br><span class="tc-key">✓ </span><span class="tc-val">MVVM bindings</span><span style="color:#3d5066"> — OK</span>
+<br><span class="tc-key">✓ </span><span class="tc-val">Unit test coverage</span><span style="color:#3d5066"> — 94%</span>
+<br><span class="tc-key">⚠ </span><span class="tc-str">Repository.GetAll()</span><span style="color:var(--muted)"> missing</span>
+<br><span style="color:#3d5066">  cancellation token — fixing...</span>
+<br><br><span class="tc-comment">// Suggested fix applied</span>
+<br><span class="tc-key">async </span><span class="tc-val">Task</span><span style="color:var(--text)">&lt;</span><span class="tc-val">IEnumerable</span><span style="color:var(--text)">&lt;T&gt;&gt;</span>
+<br><span class="tc-val">  GetAll</span><span style="color:var(--text)">(</span><span class="tc-key">CancellationToken </span><span class="tc-str">ct</span><span style="color:var(--text)">)</span>
+<br><br><span class="tc-comment">// Build: PASSED ✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="section fade-in">
+  <div class="section-tag">Code quality</div>
+  <h2>Clean Architecture by default</h2>
+  <p class="section-lead">Non-negotiable defaults on every project. The codebase your next developer can open without calling me.</p>
+  <div class="arch-grid">
+    <div class="arch-card">
+      <div class="arch-title">Clean Architecture · SOLID</div>
+      <div class="arch-desc">Every layer has a single responsibility. Business logic never leaks into UI. Dependencies flow inward, always.</div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-title">DI · IoC</div>
+      <div class="arch-desc">Microsoft.Extensions.DI or Autofac throughout. Testable, swappable, no static state hiding in corners.</div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-title">Patterns</div>
+      <div class="arch-desc">Repository, Unit of Work, CQRS, Mediator, Factory, Observer — applied where justified, not everywhere by default.</div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-title">Testing</div>
+      <div class="arch-desc">Unit and integration tests ship with the code. Not an afterthought. AI-assisted generation + manual review.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div id="reviews" class="section-full fade-in">
+<div class="section-inner">
+  <div class="section-tag">Client reviews</div>
+  <h2>What clients say</h2>
+  <p class="section-lead">12,000+ hours on Upwork. These are real reviews — replace placeholder text with your actual Upwork feedback.</p>
+  <div class="testimonials-grid">
+
+    <div class="tcard">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">Replace this with your actual Upwork review text. Alexey delivered the WPF dashboard ahead of schedule with exceptional attention to detail. The MVVM architecture is clean and well-documented — our internal team had no issues picking it up.</p>
+      <div class="tcard-sep"></div>
+      <div class="tcard-author">
+        <div class="tcard-avatar">JM</div>
+        <div>
+          <div class="tcard-name">John M.</div>
+          <div class="tcard-meta">CTO · Industrial Software Co., USA</div>
+        </div>
+        <span class="tcard-upwork">Upwork</span>
+      </div>
+    </div>
+
+    <div class="tcard">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">Replace with real review. Outstanding WPF developer. Took over a legacy codebase and modernized it to .NET 8 without breaking a single feature. Communication was excellent throughout — clear updates, realistic estimates, zero surprises.</p>
+      <div class="tcard-sep"></div>
+      <div class="tcard-author">
+        <div class="tcard-avatar">SR</div>
+        <div>
+          <div class="tcard-name">Sarah R.</div>
+          <div class="tcard-meta">Product Manager · HealthTech, USA</div>
+        </div>
+        <span class="tcard-upwork">Upwork</span>
+      </div>
+    </div>
+
+    <div class="tcard">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">Replace with real review. We needed a complex kiosk UI built from scratch with very tight deadlines. Alexey not only delivered on time but proposed UI improvements we hadn't thought of. Will hire again without hesitation.</p>
+      <div class="tcard-sep"></div>
+      <div class="tcard-author">
+        <div class="tcard-avatar">KL</div>
+        <div>
+          <div class="tcard-name">Klaus L.</div>
+          <div class="tcard-meta">Technical Director · Retail Group, Germany</div>
+        </div>
+        <span class="tcard-upwork">Upwork</span>
+      </div>
+    </div>
+
+    <div class="tcard">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">Replace with real review. Exceptional work on our SCADA dashboard. Deep understanding of both .NET architecture and industrial requirements. The code quality is some of the best I've seen from a contractor — clean, tested, maintainable.</p>
+      <div class="tcard-sep"></div>
+      <div class="tcard-author">
+        <div class="tcard-avatar">AP</div>
+        <div>
+          <div class="tcard-name">Alex P.</div>
+          <div class="tcard-meta">Lead Engineer · Automation Co., UK</div>
+        </div>
+        <span class="tcard-upwork">Upwork</span>
+      </div>
+    </div>
+
+    <div class="tcard">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">Replace with real review. Hired for a Xamarin to MAUI migration. The project was complex with lots of custom controls and third-party integrations. Alexey handled everything professionally and the new app runs beautifully on all platforms.</p>
+      <div class="tcard-sep"></div>
+      <div class="tcard-author">
+        <div class="tcard-avatar">MC</div>
+        <div>
+          <div class="tcard-name">Marco C.</div>
+          <div class="tcard-meta">Founder · SaaS Startup, Switzerland</div>
+        </div>
+        <span class="tcard-upwork">Upwork</span>
+      </div>
+    </div>
+
+    <div class="tcard">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">Replace with real review. We integrated an AI assistant into our existing WPF enterprise tool. Alexey set up Semantic Kernel and local LLM inference — the whole thing runs on-premise with no data leaving our network. Impressive work.</p>
+      <div class="tcard-sep"></div>
+      <div class="tcard-author">
+        <div class="tcard-avatar">DV</div>
+        <div>
+          <div class="tcard-name">Daniel V.</div>
+          <div class="tcard-meta">IT Director · Financial Services, Belgium</div>
+        </div>
+        <span class="tcard-upwork">Upwork</span>
+      </div>
+    </div>
+
+  </div>
+  <p class="testimonials-note">All reviews verified on <a href="https://www.upwork.com/freelancers/~016371ebdd8af72a2b" target="_blank">Upwork profile ↗</a></p>
+</div>
+</div>
+
+<!-- STACK -->
+<div id="stack" class="stack-section fade-in">
+<div class="stack-inner">
+  <div class="section-tag">Technologies</div>
+  <h2 style="margin-bottom:2.5rem">Full stack</h2>
+  <div class="stack-row">
+    <div class="stack-row-label">Core</div>
+    <div class="stack-tags">
+      <span class="tag accent">C#</span><span class="tag accent">.NET 8 / 9 / 10</span><span class="tag accent">WPF</span><span class="tag accent">XAML</span><span class="tag accent">MVVM</span>
+      <span class="tag">Prism</span><span class="tag">CommunityToolkit.Mvvm</span><span class="tag">ReactiveUI</span>
+    </div>
+  </div>
+  <div class="stack-row">
+    <div class="stack-row-label">Cross-Platform</div>
+    <div class="stack-tags">
+      <span class="tag">Avalonia UI</span><span class="tag">.NET MAUI</span><span class="tag">Uno Platform</span>
+    </div>
+  </div>
+  <div class="stack-row">
+    <div class="stack-row-label">UI Frameworks</div>
+    <div class="stack-tags">
+      <span class="tag">Telerik UI for WPF</span><span class="tag">DevExpress</span><span class="tag">Syncfusion</span><span class="tag">Figma</span>
+    </div>
+  </div>
+  <div class="stack-row">
+    <div class="stack-row-label">Data &amp; Backend</div>
+    <div class="stack-tags">
+      <span class="tag">Entity Framework Core</span><span class="tag">Dapper</span><span class="tag">SQL Server</span><span class="tag">SQLite</span><span class="tag">REST</span><span class="tag">gRPC</span>
+    </div>
+  </div>
+  <div class="stack-row">
+    <div class="stack-row-label">AI &amp; ML</div>
+    <div class="stack-tags">
+      <span class="tag accent">Semantic Kernel</span><span class="tag accent">ML.NET</span><span class="tag accent">ONNX Runtime</span>
+      <span class="tag">OpenAI API</span><span class="tag">Anthropic API</span><span class="tag">Ollama</span>
+      <span class="tag">Azure OpenAI</span><span class="tag">Whisper STT</span><span class="tag">Claude Code</span><span class="tag">GitHub Copilot</span>
+    </div>
+  </div>
+  <div class="stack-row">
+    <div class="stack-row-label">DevOps &amp; Tools</div>
+    <div class="stack-tags">
+      <span class="tag">Azure DevOps</span><span class="tag">Git / GitHub</span><span class="tag">Visual Studio</span><span class="tag">xUnit</span><span class="tag">NUnit</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- INDUSTRIES -->
+<div class="section-full fade-in">
+<div class="section-inner">
+  <div class="section-tag">Domains</div>
+  <h2>Industries served</h2>
+  <div class="ind-grid">
+    <span class="ind-tag">Industrial Automation &amp; HMI</span>
+    <span class="ind-tag">Medical &amp; Insurance</span>
+    <span class="ind-tag">Fintech &amp; Trading</span>
+    <span class="ind-tag">Retail &amp; Hospitality</span>
+    <span class="ind-tag">Manufacturing &amp; Engineering</span>
+    <span class="ind-tag">Logistics &amp; Fleet Management</span>
+    <span class="ind-tag">Energy &amp; Utilities</span>
+    <span class="ind-tag">Public-Sector Kiosks</span>
+    <span class="ind-tag">Education &amp; E-learning</span>
+    <span class="ind-tag">Real Estate &amp; Mortgage</span>
+    <span class="ind-tag">Legal &amp; Compliance</span>
+    <span class="ind-tag">SAP Integration</span>
+  </div>
+</div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="contact-section fade-in">
+  <div>
+    <div class="section-tag">Let's work together</div>
+    <h2>Start a project</h2>
+    <p style="color:var(--muted);font-size:.9rem;line-height:1.9;margin-top:1rem">Available for full-time engagement or fixed-price projects. Flexible with US and EU time zones. I respond to every inquiry personally, usually within 24 hours.</p>
+    <p class="contact-note">Preferred first contact: Upwork (for new clients) or direct email. I review every message myself — no assistant, no auto-responder.</p>
+  </div>
+  <div>
+    <div class="contact-links">
+      <a class="contact-link" href="https://www.upwork.com/freelancers/~016371ebdd8af72a2b" target="_blank">
+        <div class="contact-link-icon" style="background:rgba(20,176,82,.1);color:#14b052;font-size:16px;font-weight:700;font-family:var(--mono)">U</div>
+        <div>
+          <div class="contact-link-label">Hire on Upwork</div>
+          <div class="contact-link-val">12,000+ hours · Top Rated</div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a class="contact-link" href="mailto:your@email.com">
+        <!-- Replace href with your real email -->
+        <div class="contact-link-icon" style="background:rgba(0,200,160,.08);color:var(--accent)">✉</div>
+        <div>
+          <div class="contact-link-label">Direct email</div>
+          <div class="contact-link-val">your@email.com</div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a class="contact-link" href="https://t.me/yourusername" target="_blank">
+        <!-- Replace with your real Telegram -->
+        <div class="contact-link-icon" style="background:rgba(0,119,255,.1);color:#4d9fff">✈</div>
+        <div>
+          <div class="contact-link-label">Telegram</div>
+          <div class="contact-link-val">@yourusername</div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-mono">© 2025 Alexey — perfolancer.com</span>
+  <span class="footer-mono" style="color:var(--accent)">Available for new projects</span>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:.08});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
 </html>
