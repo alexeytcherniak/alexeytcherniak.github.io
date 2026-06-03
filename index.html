@@ -47,6 +47,15 @@
             overflow-x: hidden;
         }
 
+        /* PARTICLE CANVAS */
+        #hero-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
         body::before {
             content: "";
             position: fixed;
@@ -57,22 +66,14 @@
             opacity: 0.4;
         }
 
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(0, 200, 160, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 200, 160, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
         section,
         nav,
         footer,
-        div {
+        .hero,
+        .about-section,
+        .section,
+        .section-full,
+        .stack-section {
             position: relative;
             z-index: 1;
         }
@@ -137,13 +138,16 @@
         /* HERO */
         .hero {
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
             padding: 8rem 4rem 4rem;
             max-width: 1200px;
             margin: 0 auto;
         }
+
+        .hero-content {}
 
         .hero-tag {
             font-family: var(--mono);
@@ -165,7 +169,7 @@
         }
 
         h1 {
-            font-size: clamp(2.4rem, 5vw, 4.2rem);
+            font-size: clamp(2.2rem, 4vw, 3.8rem);
             font-weight: 700;
             line-height: 1.1;
             letter-spacing: -0.02em;
@@ -177,16 +181,16 @@
         }
 
         .hero-sub {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             color: var(--muted);
-            max-width: 580px;
+            max-width: 520px;
             margin-bottom: 2.5rem;
             line-height: 1.8;
         }
 
         .hero-stats {
             display: flex;
-            gap: 3rem;
+            gap: 2.5rem;
             margin-bottom: 3rem;
         }
 
@@ -292,6 +296,329 @@
             }
         }
 
+        /* HERO ILLUSTRATION */
+        .hero-illustration {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-window {
+            width: 100%;
+            max-width: 460px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow:
+                0 0 80px rgba(0, 200, 160, 0.07),
+                0 40px 100px rgba(0, 0, 0, 0.6);
+            animation: floatWin 6s ease-in-out infinite;
+        }
+
+        @keyframes floatWin {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-1deg);
+            }
+
+            50% {
+                transform: translateY(-14px) rotate(-1deg);
+            }
+        }
+
+        .app-titlebar {
+            background: var(--surface);
+            padding: 0.65rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .app-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .app-dot.r {
+            background: #ff5f57;
+        }
+
+        .app-dot.y {
+            background: #febc2e;
+        }
+
+        .app-dot.g {
+            background: #28c840;
+        }
+
+        .app-wtitle {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            margin-left: 0.75rem;
+            flex: 1;
+        }
+
+        .app-wcontrols {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+        }
+
+        .app-body {
+            display: flex;
+            height: 300px;
+        }
+
+        .app-sidebar {
+            width: 100px;
+            background: var(--bg3);
+            border-right: 1px solid var(--border);
+            padding: 0.75rem 0;
+            flex-shrink: 0;
+        }
+
+        .sb-item {
+            padding: 0.5rem 0.9rem;
+            font-size: 11px;
+            color: var(--muted);
+            cursor: default;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--mono);
+        }
+
+        .sb-item::before {
+            content: "";
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--border);
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+
+        .sb-item.active {
+            color: var(--accent);
+            background: rgba(0, 200, 160, 0.06);
+        }
+
+        .sb-item.active::before {
+            background: var(--accent);
+        }
+
+        .app-content {
+            flex: 1;
+            padding: 0.9rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .app-statcards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+
+        .app-statcard {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.5rem 0.6rem;
+        }
+
+        .app-statcard span {
+            font-size: 9px;
+            color: var(--muted);
+            font-family: var(--mono);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: block;
+        }
+
+        .app-statcard strong {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            font-family: var(--mono);
+        }
+
+        .app-statcard strong.accent {
+            color: var(--accent);
+        }
+
+        .chart-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.6rem;
+            flex: 1;
+        }
+
+        .chart-label {
+            font-size: 9px;
+            color: var(--muted);
+            font-family: var(--mono);
+            letter-spacing: 0.06em;
+            margin-bottom: 0.4rem;
+        }
+
+        .chart-svg {
+            width: 100%;
+            height: 70px;
+            display: block;
+            overflow: visible;
+        }
+
+        .chart-fill {
+            fill: url(#chartGrad);
+            stroke: none;
+            opacity: 0.3;
+        }
+
+        .chart-line {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 600;
+            stroke-dashoffset: 600;
+            animation: drawChart 2s ease forwards 0.8s;
+        }
+
+        @keyframes drawChart {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .app-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .app-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 10px;
+            font-family: var(--mono);
+            color: var(--muted);
+            padding: 0.3rem 0.5rem;
+            background: var(--surface);
+            border-radius: 3px;
+            border: 1px solid var(--border);
+        }
+
+        .row-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .row-dot.on {
+            background: #28c840;
+        }
+
+        .row-dot.warn {
+            background: #febc2e;
+            animation: pulse 1.5s infinite;
+        }
+
+        .app-row .row-status {
+            margin-left: auto;
+            color: var(--accent);
+        }
+
+        .app-row .row-status.warn {
+            color: #febc2e;
+        }
+
+        /* FLOATING CHIPS */
+        .float-chips {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .fchip {
+            position: absolute;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 10px;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            backdrop-filter: blur(4px);
+        }
+
+        .fchip.c1 {
+            top: 8%;
+            left: -8%;
+            border-color: rgba(0, 200, 160, 0.3);
+            color: var(--accent);
+            animation: fc1 5s ease-in-out infinite;
+        }
+
+        .fchip.c2 {
+            top: 20%;
+            right: -10%;
+            animation: fc2 6s ease-in-out infinite 0.5s;
+        }
+
+        .fchip.c3 {
+            bottom: 25%;
+            left: -12%;
+            animation: fc1 5.5s ease-in-out infinite 1s;
+        }
+
+        .fchip.c4 {
+            bottom: 8%;
+            right: -6%;
+            border-color: rgba(0, 119, 255, 0.3);
+            color: #4d9fff;
+            animation: fc2 4.5s ease-in-out infinite 0.3s;
+        }
+
+        @keyframes fc1 {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes fc2 {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(8px);
+            }
+        }
+
         /* ABOUT */
         .about-section {
             padding: 6rem 4rem;
@@ -327,13 +654,6 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            position: relative;
-        }
-
-        .about-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .photo-placeholder {
@@ -355,7 +675,7 @@
         .photo-placeholder-text {
             font-family: var(--mono);
             font-size: 10px;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             opacity: 0.5;
             text-align: center;
             padding: 0 0.5rem;
@@ -398,10 +718,6 @@
             font-size: 0.95rem;
             line-height: 1.9;
             margin-bottom: 1rem;
-        }
-
-        .about-text p:last-child {
-            margin-bottom: 0;
         }
 
         .about-highlights {
@@ -474,7 +790,7 @@
         .service-card {
             background: var(--bg);
             padding: 2.5rem;
-            transition: background 0.2s;
+            transition: background 0.3s;
         }
 
         .service-card:hover {
@@ -537,7 +853,6 @@
         .portfolio-item {
             background: var(--bg);
             overflow: hidden;
-            cursor: default;
             transition: background 0.2s;
         }
 
@@ -547,6 +862,10 @@
 
         .portfolio-item:hover .portfolio-img-overlay {
             opacity: 1;
+        }
+
+        .portfolio-item:hover .portfolio-img img {
+            transform: scale(1.04);
         }
 
         .portfolio-img {
@@ -560,11 +879,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s;
-        }
-
-        .portfolio-item:hover .portfolio-img img {
-            transform: scale(1.03);
+            transition: transform 0.5s ease;
         }
 
         .portfolio-img-placeholder {
@@ -580,11 +895,12 @@
         .portfolio-img-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 200, 160, 0.06);
-            border: 2px solid transparent;
+            background: rgba(0, 200, 160, 0.05);
+            border: 2px solid rgba(0, 200, 160, 0.2);
             transition: opacity 0.3s;
             opacity: 0;
             pointer-events: none;
+            border-radius: 0;
         }
 
         .pimg-icon {
@@ -596,8 +912,8 @@
             font-family: var(--mono);
             font-size: 11px;
             color: var(--muted);
-            opacity: 0.6;
-            letter-spacing: 0.08em;
+            opacity: 0.5;
+            letter-spacing: 0.06em;
         }
 
         .portfolio-body {
@@ -656,7 +972,6 @@
             color: var(--muted);
         }
 
-        /* wide item */
         .portfolio-item.wide {
             grid-column: span 2;
         }
@@ -949,10 +1264,6 @@
             text-decoration: none;
         }
 
-        .testimonials-note a:hover {
-            text-decoration: underline;
-        }
-
         /* STACK */
         .stack-section {
             padding: 5rem 4rem;
@@ -993,11 +1304,13 @@
             font-size: 0.8rem;
             font-family: var(--mono);
             letter-spacing: 0.03em;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
+            cursor: default;
         }
 
         .tag:hover {
             border-color: var(--accent);
+            color: var(--accent);
         }
 
         .tag.accent {
@@ -1021,6 +1334,7 @@
             border-radius: 20px;
             font-size: 0.78rem;
             transition: all 0.2s;
+            cursor: default;
         }
 
         .ind-tag:hover {
@@ -1062,6 +1376,7 @@
         .contact-link:hover {
             border-color: var(--accent);
             background: var(--surface2);
+            transform: translateX(4px);
         }
 
         .contact-link-icon {
@@ -1093,7 +1408,7 @@
         }
 
         .contact-link:hover .contact-link-arrow {
-            transform: translateX(4px);
+            transform: translateX(0);
             color: var(--accent);
         }
 
@@ -1119,13 +1434,13 @@
             color: var(--muted);
         }
 
-        /* FADE IN */
+        /* SCROLL ANIMATIONS */
         .fade-in {
             opacity: 0;
-            transform: translateY(24px);
+            transform: translateY(30px);
             transition:
-                opacity 0.6s ease,
-                transform 0.6s ease;
+                opacity 0.7s ease,
+                transform 0.7s ease;
         }
 
         .fade-in.visible {
@@ -1133,9 +1448,85 @@
             transform: translateY(0);
         }
 
+        .slide-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
+        }
+
+        .slide-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
+        }
+
+        .slide-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* stagger children */
+        .stagger>* {
+            opacity: 0;
+            transform: translateY(20px);
+            transition:
+                opacity 0.5s ease,
+                transform 0.5s ease;
+        }
+
+        .stagger.visible>* {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger.visible>*:nth-child(1) {
+            transition-delay: 0.05s;
+        }
+
+        .stagger.visible>*:nth-child(2) {
+            transition-delay: 0.12s;
+        }
+
+        .stagger.visible>*:nth-child(3) {
+            transition-delay: 0.19s;
+        }
+
+        .stagger.visible>*:nth-child(4) {
+            transition-delay: 0.26s;
+        }
+
+        .stagger.visible>*:nth-child(5) {
+            transition-delay: 0.33s;
+        }
+
+        .stagger.visible>*:nth-child(6) {
+            transition-delay: 0.4s;
+        }
+
         .divider {
             height: 1px;
             background: var(--border);
+        }
+
+        @media (max-width: 1000px) {
+            .hero {
+                grid-template-columns: 1fr;
+                min-height: auto;
+                padding-top: 7rem;
+            }
+
+            .hero-illustration {
+                display: none;
+            }
         }
 
         @media (max-width: 900px) {
@@ -1213,15 +1604,29 @@
 </head>
 
 <body>
+    <canvas id="hero-canvas"></canvas>
+
     <nav>
         <span class="nav-logo">perfolancer.com</span>
         <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#reviews">Reviews</a></li>
-            <li><a href="#stack">Stack</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li>
+                <a href="#about">About</a>
+            </li>
+            <li>
+                <a href="#services">Services</a>
+            </li>
+            <li>
+                <a href="#portfolio">Portfolio</a>
+            </li>
+            <li>
+                <a href="#reviews">Reviews</a>
+            </li>
+            <li>
+                <a href="#stack">Stack</a>
+            </li>
+            <li>
+                <a href="#contact">Contact</a>
+            </li>
         </ul>
         <a class="nav-cta"
            href="https://www.upwork.com/freelancers/~016371ebdd8af72a2b"
@@ -1229,26 +1634,134 @@
     </nav>
 
     <!-- HERO -->
-    <div class="hero fade-in">
-        <div class="hero-tag">Available for projects</div>
-        <h1>Senior <span>WPF / .NET</span><br />Desktop Developer</h1>
-        <p class="hero-sub">
-            I build Windows desktop applications that run in production — industrial HMI, enterprise dashboards,
-            kiosks, and data-heavy tools. AI-augmented workflow: faster delivery, production-grade quality.
-        </p>
-        <div class="hero-stats">
-            <div><span class="stat-val">12+</span><span class="stat-label">Years experience</span></div>
-            <div><span class="stat-val">12k+</span><span class="stat-label">Upwork hours</span></div>
-            <div><span class="stat-val">30+</span><span class="stat-label">Production projects</span></div>
+    <div class="hero">
+        <div class="hero-content fade-in">
+            <div class="hero-tag">Available for projects</div>
+            <h1>Senior <span>WPF / .NET</span><br />Desktop Developer</h1>
+            <p class="hero-sub">
+                I build Windows desktop applications that run in production —
+                industrial HMI, enterprise dashboards, kiosks, and data-heavy tools.
+                AI-augmented workflow: faster delivery, production-grade quality.
+            </p>
+            <div class="hero-stats">
+                <div>
+                    <span class="stat-val counter"
+                          data-target="12">0</span>
+                    <span class="stat-label">Years experience</span>
+                </div>
+                <div>
+                    <span class="stat-val counter"
+                          data-target="12"
+                          data-suffix="k+">0</span>
+                    <span class="stat-label">Upwork hours</span>
+                </div>
+                <div>
+                    <span class="stat-val counter"
+                          data-target="30">0</span>
+                    <span class="stat-label">Production projects</span>
+                </div>
+            </div>
+            <div class="hero-actions">
+                <a class="btn-primary"
+                   href="https://www.upwork.com/freelancers/~016371ebdd8af72a2b"
+                   target="_blank">View Upwork Profile ↗</a>
+                <a class="btn-ghost"
+                   href="#contact">Get in touch</a>
+            </div>
+            <div class="ai-badge">
+                <span class="ai-dot"></span> AI-Augmented — Claude Code · GitHub
+                Copilot
+            </div>
         </div>
-        <div class="hero-actions">
-            <a class="btn-primary"
-               href="https://www.upwork.com/freelancers/~016371ebdd8af72a2b"
-               target="_blank">View Upwork Profile ↗</a>
-            <a class="btn-ghost"
-               href="#contact">Get in touch</a>
+
+        <!-- HERO ILLUSTRATION -->
+        <div class="hero-illustration slide-right">
+            <div class="float-chips">
+                <div class="fchip c1">WPF / XAML</div>
+                <div class="fchip c2">C# .NET 10</div>
+                <div class="fchip c3">Clean Arch</div>
+                <div class="fchip c4">AI-Augmented</div>
+            </div>
+            <div class="app-window">
+                <div class="app-titlebar">
+                    <span class="app-dot r"></span>
+                    <span class="app-dot y"></span>
+                    <span class="app-dot g"></span>
+                    <span class="app-wtitle">DataStream Dashboard v3.2</span>
+                    <span class="app-wcontrols">─ □ ✕</span>
+                </div>
+                <div class="app-body">
+                    <div class="app-sidebar">
+                        <div class="sb-item active">Dashboard</div>
+                        <div class="sb-item">Analytics</div>
+                        <div class="sb-item">Reports</div>
+                        <div class="sb-item">Devices</div>
+                        <div class="sb-item">Settings</div>
+                    </div>
+                    <div class="app-content">
+                        <div class="app-statcards">
+                            <div class="app-statcard">
+                                <span>Active</span>
+                                <strong class="accent">1,284</strong>
+                            </div>
+                            <div class="app-statcard">
+                                <span>Errors</span>
+                                <strong>3</strong>
+                            </div>
+                            <div class="app-statcard">
+                                <span>Uptime</span>
+                                <strong>99.8%</strong>
+                            </div>
+                        </div>
+                        <div class="chart-wrap">
+                            <div class="chart-label">THROUGHPUT · REAL-TIME</div>
+                            <svg class="chart-svg"
+                                 viewBox="0 0 300 70"
+                                 preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="chartGrad"
+                                                    x1="0"
+                                                    y1="0"
+                                                    x2="0"
+                                                    y2="1">
+                                        <stop offset="0%"
+                                              stop-color="#00c8a0"
+                                              stop-opacity="0.4" />
+                                        <stop offset="100%"
+                                              stop-color="#00c8a0"
+                                              stop-opacity="0" />
+                                    </linearGradient>
+                                </defs>
+                                <polyline class="chart-fill"
+                                          points="0,60 30,50 60,55 90,35 120,42 150,25 180,38 210,18 240,30 270,15 300,20 300,70 0,70" />
+                                <polyline class="chart-line"
+                                          points="0,60 30,50 60,55 90,35 120,42 150,25 180,38 210,18 240,30 270,15 300,20" />
+                            </svg>
+                        </div>
+                        <div class="app-rows">
+                            <div class="app-row">
+                                <span class="row-dot on"></span>
+                                <span>Process Alpha</span>
+                                <span class="row-status"
+                                      style="margin-left: auto">Running</span>
+                            </div>
+                            <div class="app-row">
+                                <span class="row-dot on"></span>
+                                <span>Process Beta</span>
+                                <span class="row-status"
+                                      style="margin-left: auto">Active</span>
+                            </div>
+                            <div class="app-row">
+                                <span class="row-dot warn"></span>
+                                <span>Sync Service</span>
+                                <span class="row-status warn"
+                                      style="margin-left: auto">Syncing…</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="ai-badge"><span class="ai-dot"></span> AI-Augmented — Claude Code · GitHub Copilot</div>
     </div>
 
     <!-- ABOUT -->
@@ -1257,30 +1770,35 @@
         <div class="about-inner">
             <div class="about-photo-wrap">
                 <div class="about-photo">
-                    <!-- Replace src with your photo path, e.g. src="photo.jpg" -->
                     <div class="photo-placeholder">
                         <span class="photo-placeholder-icon">👤</span>
                         <span class="photo-placeholder-text">Replace with<br />your photo</span>
                     </div>
                 </div>
-                <div class="about-available"><span class="about-avail-dot"></span> Available now</div>
+                <div class="about-available">
+                    <span class="about-avail-dot"></span> Available now
+                </div>
             </div>
             <div class="about-text">
                 <h2>Hi, I'm <span>Alexey</span> 👋</h2>
                 <p>
-                    I'm a senior software developer with 12+ years of experience building professional Windows
-                    desktop applications. I work with C#, .NET, and WPF — and I genuinely enjoy what I do. Complex
-                    UI challenges, industrial control systems, data-heavy enterprise tools — this is my everyday.
+                    I'm a senior software developer with 12+ years of experience
+                    building professional Windows desktop applications. I work with C#,
+                    .NET, and WPF — and I genuinely enjoy what I do. Complex UI
+                    challenges, industrial control systems, data-heavy enterprise tools
+                    — this is my everyday.
                 </p>
                 <p>
-                    Based in Spain, working with clients across the US and Europe. I've delivered production
-                    software for companies like SafeFleet, Winshuttle (now Precisely), Cloudmed, and Adaura
-                    Technologies — whose customers include NASA, Google, Intel, and MIT.
+                    Based in Spain, working with clients across the US and Europe. I've
+                    delivered production software for companies like SafeFleet,
+                    Winshuttle (now Precisely), Cloudmed, and Adaura Technologies —
+                    whose customers include NASA, Google, Intel, and MIT.
                 </p>
                 <p>
-                    In 2024–2025 I integrated AI-assisted development into my daily workflow — Claude Code and
-                    GitHub Copilot at every stage. The result is measurable: faster delivery, fewer bugs, cleaner
-                    architecture. Same budget, better outcome for the client.
+                    In 2024–2025 I integrated AI-assisted development into my daily
+                    workflow — Claude Code and GitHub Copilot at every stage. The result
+                    is measurable: faster delivery, fewer bugs, cleaner architecture.
+                    Same budget, better outcome for the client.
                 </p>
                 <div class="about-highlights">
                     <span class="about-hl">📍 Spain / EU timezone</span>
@@ -1300,15 +1818,17 @@
             <div class="section-tag">What I build</div>
             <h2>Three areas of expertise</h2>
             <p class="section-lead">
-                From scratch or on top of an existing codebase — Windows-native, cross-platform, or AI-powered.
+                From scratch or on top of an existing codebase — Windows-native,
+                cross-platform, or AI-powered.
             </p>
-            <div class="services-grid">
+            <div class="services-grid stagger">
                 <div class="service-card">
                     <div class="service-num">01 / WPF Desktop</div>
                     <h3>Windows Desktop Applications</h3>
                     <p>
-                        Complex WPF/XAML applications with MVVM architecture. From industrial control panels to
-                        enterprise dashboards — if it runs on Windows, I build it right.
+                        Complex WPF/XAML applications with MVVM architecture. From
+                        industrial control panels to enterprise dashboards — if it runs on
+                        Windows, I build it right.
                     </p>
                     <ul class="service-list">
                         <li>WPF/XAML from scratch or codebase takeover</li>
@@ -1324,8 +1844,9 @@
                     <div class="service-num">02 / Cross-Platform</div>
                     <h3>Multi-Platform .NET Apps</h3>
                     <p>
-                        One C# codebase targeting Windows, macOS, Linux, iOS, and Android. Deep WPF/XAML foundation
-                        makes cross-platform frameworks a natural extension.
+                        One C# codebase targeting Windows, macOS, Linux, iOS, and Android.
+                        Deep WPF/XAML foundation makes cross-platform frameworks a natural
+                        extension.
                     </p>
                     <ul class="service-list">
                         <li>Avalonia UI — desktop: Win / macOS / Linux</li>
@@ -1341,8 +1862,9 @@
                     <div class="service-num">03 / AI Integration</div>
                     <h3>AI-Native Desktop Tools</h3>
                     <p>
-                        Add AI capabilities to existing applications or build AI-native tools from scratch — no
-                        cloud lock-in, no separate Python team needed.
+                        Add AI capabilities to existing applications or build AI-native
+                        tools from scratch — no cloud lock-in, no separate Python team
+                        needed.
                     </p>
                     <ul class="service-list">
                         <li>Chat assistant embedded in your app</li>
@@ -1364,14 +1886,13 @@
         <div class="section-tag">Portfolio</div>
         <h2>Selected screenshots</h2>
         <p class="section-lead">
-            Real projects, real UIs. Replace placeholder images with actual screenshots — same layout, instant
-            upgrade.
+            Real projects, real UIs. Replace placeholder images with actual
+            screenshots — same layout, instant upgrade.
         </p>
         <div class="portfolio-grid">
             <div class="portfolio-item wide">
                 <div class="portfolio-img"
                      style="background: linear-gradient(135deg, #0d1f2d, #0a2a1e)">
-                    <!-- Replace with: <img src="screenshots/safelink.png" alt="SafeLink Service Tool"> -->
                     <div class="portfolio-img-placeholder">
                         <span class="pimg-icon">🖥️</span>
                         <span class="pimg-label">screenshot · safelink-service-tool.png</span>
@@ -1380,14 +1901,16 @@
                 </div>
                 <div class="portfolio-body">
                     <div class="portfolio-tags">
-                        <span class="ptag">WPF</span><span class="ptag">Hardware</span><span
-                              class="ptag">Industrial</span>
+                        <span class="ptag">WPF</span>
+                        <span class="ptag">Hardware</span>
+                        <span class="ptag">Industrial</span>
                     </div>
                     <h4>SafeLink Service Tool</h4>
                     <p>
-                        Update and diagnostic software for firefighting and emergency medical equipment. Real-time
-                        hardware communication, fault diagnostics, firmware update pipeline, and multi-device
-                        management — built for field technicians working under pressure.
+                        Update and diagnostic software for firefighting and emergency
+                        medical equipment. Real-time hardware communication, fault
+                        diagnostics, firmware update pipeline, built for field technicians
+                        working under pressure.
                     </p>
                     <div class="portfolio-meta">
                         <span class="portfolio-client">SafeFleet — USA</span>
@@ -1395,7 +1918,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="portfolio-item">
                 <div class="portfolio-img"
                      style="background: linear-gradient(135deg, #0d1a2e, #0a1528)">
@@ -1407,13 +1929,14 @@
                 </div>
                 <div class="portfolio-body">
                     <div class="portfolio-tags">
-                        <span class="ptag">WPF</span><span class="ptag">RF Control</span><span
-                              class="ptag">Dashboard</span>
+                        <span class="ptag">WPF</span>
+                        <span class="ptag">RF Control</span>
+                        <span class="ptag">Dashboard</span>
                     </div>
                     <h4>Adaura Control Dashboard</h4>
                     <p>
-                        Desktop app for intuitive control of Programmable RF Attenuators. Customers include Google,
-                        Intel, MIT, NASA, and Verizon. Precision instrument UI with real-time feedback.
+                        Desktop app for intuitive control of Programmable RF Attenuators.
+                        Customers include Google, Intel, MIT, NASA, and Verizon.
                     </p>
                     <div class="portfolio-meta">
                         <span class="portfolio-client">Adaura Technologies — USA</span>
@@ -1421,7 +1944,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="portfolio-item">
                 <div class="portfolio-img"
                      style="background: linear-gradient(135deg, #1a1200, #2a1a00)">
@@ -1433,12 +1955,15 @@
                 </div>
                 <div class="portfolio-body">
                     <div class="portfolio-tags">
-                        <span class="ptag">WPF</span><span class="ptag">Touch UI</span><span class="ptag">POS</span>
+                        <span class="ptag">WPF</span>
+                        <span class="ptag">Touch UI</span>
+                        <span class="ptag">POS</span>
                     </div>
                     <h4>Panipro WinWin POS</h4>
                     <p>
-                        POS terminal software for retail and catering with an intuitive touch-screen interface.
-                        Multi-currency, multi-language, high-throughput transaction processing.
+                        POS terminal software for retail and catering with an intuitive
+                        touch-screen interface. Multi-currency, multi-language,
+                        high-throughput transaction processing.
                     </p>
                     <div class="portfolio-meta">
                         <span class="portfolio-client">Panipro Software — Switzerland</span>
@@ -1446,7 +1971,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="portfolio-item">
                 <div class="portfolio-img"
                      style="background: linear-gradient(135deg, #0a1a2e, #001a3a)">
@@ -1458,12 +1982,14 @@
                 </div>
                 <div class="portfolio-body">
                     <div class="portfolio-tags">
-                        <span class="ptag">WPF</span><span class="ptag">SAP</span><span class="ptag">Enterprise</span>
+                        <span class="ptag">WPF</span>
+                        <span class="ptag">SAP</span>
+                        <span class="ptag">Enterprise</span>
                     </div>
                     <h4>Winshuttle Automate Studio</h4>
                     <p>
-                        MS Office-like suite of powerful data management tools for automated SAP data processing.
-                        Complex grid interfaces, macro engine, multi-format import/export.
+                        MS Office-like suite for automated SAP data processing. Complex
+                        grid interfaces, macro engine, multi-format import/export.
                     </p>
                     <div class="portfolio-meta">
                         <span class="portfolio-client">Winshuttle / Precisely — USA</span>
@@ -1471,7 +1997,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="portfolio-item">
                 <div class="portfolio-img"
                      style="background: linear-gradient(135deg, #1a0a0a, #2a0d0d)">
@@ -1483,12 +2008,15 @@
                 </div>
                 <div class="portfolio-body">
                     <div class="portfolio-tags">
-                        <span class="ptag">WPF</span><span class="ptag">Kiosk</span><span class="ptag">Touch</span>
+                        <span class="ptag">WPF</span>
+                        <span class="ptag">Kiosk</span>
+                        <span class="ptag">Touch</span>
                     </div>
                     <h4>Wēpa Printing Kiosk</h4>
                     <p>
-                        Touch-based kiosk app for printing at US universities and public places. Unattended
-                        operation, fault-tolerant, high-traffic. Redesigned UX from ground up.
+                        Touch-based kiosk for printing at US universities and public
+                        places. Unattended operation, fault-tolerant, high-traffic, fully
+                        redesigned UX.
                     </p>
                     <div class="portfolio-meta">
                         <span class="portfolio-client">Wēpa Now — USA</span>
@@ -1496,7 +2024,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="portfolio-item">
                 <div class="portfolio-img"
                      style="background: linear-gradient(135deg, #001a10, #002a1a)">
@@ -1508,13 +2035,15 @@
                 </div>
                 <div class="portfolio-body">
                     <div class="portfolio-tags">
-                        <span class="ptag">WPF</span><span class="ptag">Industrial HMI</span><span
-                              class="ptag">CNC</span>
+                        <span class="ptag">WPF</span>
+                        <span class="ptag">Industrial HMI</span>
+                        <span class="ptag">CNC</span>
                     </div>
                     <h4>Variobend V-Touch</h4>
                     <p>
-                        Bending machine control software with industrial touch UI. Real-time G-code visualization,
-                        precision motion control, operator safety interlocks.
+                        Bending machine control software with industrial touch UI.
+                        Real-time G-code visualization, precision motion control, operator
+                        safety interlocks.
                     </p>
                     <div class="portfolio-meta">
                         <span class="portfolio-client">ASCO Biegetechnik — Germany</span>
@@ -1531,18 +2060,20 @@
             <div class="section-tag">AI-Augmented Development</div>
             <h2>Why AI in the workflow matters</h2>
             <p class="section-lead">
-                Not a buzzword. A measurable shift in delivery speed, code quality, and reliability.
+                Not a buzzword. A measurable shift in delivery speed, code quality,
+                and reliability.
             </p>
             <div class="ai-grid">
                 <div>
-                    <div class="ai-features">
+                    <div class="ai-features stagger">
                         <div class="ai-feat">
                             <div class="ai-icon">⚡</div>
                             <div>
                                 <h4>Faster delivery</h4>
                                 <p>
-                                    Architecture decisions, XAML generation, boilerplate, and unit tests are
-                                    AI-assisted at every stage. Same scope ships sooner.
+                                    Architecture decisions, XAML generation, boilerplate, and
+                                    unit tests are AI-assisted at every stage. Same scope ships
+                                    sooner.
                                 </p>
                             </div>
                         </div>
@@ -1551,8 +2082,9 @@
                             <div>
                                 <h4>Fewer bugs in production</h4>
                                 <p>
-                                    AI-powered code review catches issues before they reach you. Edge cases missed
-                                    in manual review are surfaced automatically.
+                                    AI-powered code review catches issues before they reach you.
+                                    Edge cases missed in manual review are surfaced
+                                    automatically.
                                 </p>
                             </div>
                         </div>
@@ -1561,8 +2093,8 @@
                             <div>
                                 <h4>Cleaner architecture</h4>
                                 <p>
-                                    AI assists with refactoring toward Clean Architecture — not just writing new
-                                    code, but improving what's already there.
+                                    AI assists with refactoring toward Clean Architecture — not
+                                    just writing new code, but improving what's already there.
                                 </p>
                             </div>
                         </div>
@@ -1571,8 +2103,8 @@
                             <div>
                                 <h4>Claude Code + GitHub Copilot</h4>
                                 <p>
-                                    Integrated into Visual Studio and the terminal. A peer reviewing every commit —
-                                    not a chatbot for copy-paste.
+                                    Integrated into Visual Studio and the terminal. A peer
+                                    reviewing every commit — not a chatbot for copy-paste.
                                 </p>
                             </div>
                         </div>
@@ -1581,34 +2113,59 @@
                 <div>
                     <div class="ai-terminal">
                         <div class="terminal-bar">
-                            <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
+                            <span class="t-dot"></span>
+                            <span class="t-dot"></span>
+                            <span class="t-dot"></span>
                             <span style="
-                                        margin-left: 0.75rem;
-                                        font-family: var(--mono);
-                                        font-size: 11px;
-                                        color: var(--muted);
-                                    ">claude-code — project review</span>
+                    margin-left: 0.75rem;
+                    font-family: var(--mono);
+                    font-size: 11px;
+                    color: var(--muted);
+                  ">claude-code — project review</span>
                         </div>
                         <div class="terminal-code">
                             <span class="tc-comment">// Architecture review output</span>
-                            <br /><span class="tc-key">✓ </span><span class="tc-val">Clean Architecture
-                                layers</span><span style="color: #3d5066"> — OK</span> <br /><span class="tc-key">✓
-                            </span><span class="tc-val">DI container wiring</span><span style="color: #3d5066"> —
-                                OK</span> <br /><span class="tc-key">✓ </span><span class="tc-val">MVVM
-                                bindings</span><span style="color: #3d5066"> — OK</span>
-                            <br /><span class="tc-key">✓ </span><span class="tc-val">Unit test coverage</span><span
-                                  style="color: #3d5066"> — 94%</span> <br /><span class="tc-key">⚠ </span><span
-                                  class="tc-str">Repository.GetAll()</span><span style="color: var(--muted)">
-                                missing</span> <br /><span style="color: #3d5066">
+                            <br />
+                            <span class="tc-key">✓ </span>
+                            <span class="tc-val">Clean Architecture layers</span>
+                            <span style="color: #3d5066"> — OK</span>
+                            <br />
+                            <span class="tc-key">✓ </span>
+                            <span class="tc-val">DI container wiring</span>
+                            <span style="color: #3d5066"> — OK</span>
+                            <br />
+                            <span class="tc-key">✓ </span>
+                            <span class="tc-val">MVVM bindings</span>
+                            <span style="color: #3d5066"> — OK</span>
+                            <br />
+                            <span class="tc-key">✓ </span>
+                            <span class="tc-val">Unit test coverage</span>
+                            <span style="color: #3d5066"> — 94%</span>
+                            <br />
+                            <span class="tc-key">⚠ </span>
+                            <span class="tc-str">Repository.GetAll()</span>
+                            <span style="color: var(--muted)"> missing</span>
+                            <br />
+                            <span style="color: #3d5066">
                                 cancellation token — fixing...</span>
-                            <br /><br /><span class="tc-comment">// Suggested fix applied</span> <br /><span
-                                  class="tc-key">async </span><span class="tc-val">Task</span><span
-                                  style="color: var(--text)">&lt;</span><span class="tc-val">IEnumerable</span><span
-                                  style="color: var(--text)">&lt;T&gt;&gt;</span> <br /><span class="tc-val">
-                                GetAll</span><span style="color: var(--text)">(</span><span
-                                  class="tc-key">CancellationToken </span><span class="tc-str">ct</span><span
-                                  style="color: var(--text)">)</span>
-                            <br /><br /><span class="tc-comment">// Build: PASSED ✓</span>
+                            <br />
+                            <br />
+                            <span class="tc-comment">// Suggested fix applied</span>
+                            <br />
+                            <span class="tc-key">async </span>
+                            <span class="tc-val">Task</span>
+                            <span style="color: var(--text)">&lt;</span>
+                            <span class="tc-val">IEnumerable</span>
+                            <span style="color: var(--text)">&lt;T&gt;&gt;</span>
+                            <br />
+                            <span class="tc-val"> GetAll</span>
+                            <span style="color: var(--text)">(</span>
+                            <span class="tc-key">CancellationToken </span>
+                            <span class="tc-str">ct</span>
+                            <span style="color: var(--text)">)</span>
+                            <br />
+                            <br />
+                            <span class="tc-comment">// Build: PASSED ✓</span>
                         </div>
                     </div>
                 </div>
@@ -1621,35 +2178,36 @@
         <div class="section-tag">Code quality</div>
         <h2>Clean Architecture by default</h2>
         <p class="section-lead">
-            Non-negotiable defaults on every project. The codebase your next developer can open without calling me.
+            Non-negotiable defaults on every project. The codebase your next
+            developer can open without calling me.
         </p>
-        <div class="arch-grid">
+        <div class="arch-grid stagger">
             <div class="arch-card">
                 <div class="arch-title">Clean Architecture · SOLID</div>
                 <div class="arch-desc">
-                    Every layer has a single responsibility. Business logic never leaks into UI. Dependencies flow
-                    inward, always.
+                    Every layer has a single responsibility. Business logic never leaks
+                    into UI. Dependencies flow inward, always.
                 </div>
             </div>
             <div class="arch-card">
                 <div class="arch-title">DI · IoC</div>
                 <div class="arch-desc">
-                    Microsoft.Extensions.DI or Autofac throughout. Testable, swappable, no static state hiding in
-                    corners.
+                    Microsoft.Extensions.DI or Autofac throughout. Testable, swappable,
+                    no static state hiding in corners.
                 </div>
             </div>
             <div class="arch-card">
                 <div class="arch-title">Patterns</div>
                 <div class="arch-desc">
-                    Repository, Unit of Work, CQRS, Mediator, Factory, Observer — applied where justified, not
-                    everywhere by default.
+                    Repository, Unit of Work, CQRS, Mediator, Factory, Observer —
+                    applied where justified, not everywhere by default.
                 </div>
             </div>
             <div class="arch-card">
                 <div class="arch-title">Testing</div>
                 <div class="arch-desc">
-                    Unit and integration tests ship with the code. Not an afterthought. AI-assisted generation +
-                    manual review.
+                    Unit and integration tests ship with the code. Not an afterthought.
+                    AI-assisted generation + manual review.
                 </div>
             </div>
         </div>
@@ -1662,16 +2220,17 @@
             <div class="section-tag">Client reviews</div>
             <h2>What clients say</h2>
             <p class="section-lead">
-                12,000+ hours on Upwork. These are real reviews — replace placeholder text with your actual Upwork
-                feedback.
+                12,000+ hours on Upwork. Replace placeholder text with your actual
+                Upwork feedback.
             </p>
-            <div class="testimonials-grid">
+            <div class="testimonials-grid stagger">
                 <div class="tcard">
                     <div class="tcard-stars">★★★★★</div>
                     <p class="tcard-text">
-                        Replace this with your actual Upwork review text. Alexey delivered the WPF dashboard ahead
-                        of schedule with exceptional attention to detail. The MVVM architecture is clean and
-                        well-documented — our internal team had no issues picking it up.
+                        Replace this with your actual Upwork review. Alexey delivered the
+                        WPF dashboard ahead of schedule with exceptional attention to
+                        detail. The MVVM architecture is clean and well-documented — our
+                        internal team had no issues picking it up.
                     </p>
                     <div class="tcard-sep"></div>
                     <div class="tcard-author">
@@ -1683,13 +2242,13 @@
                         <span class="tcard-upwork">Upwork</span>
                     </div>
                 </div>
-
                 <div class="tcard">
                     <div class="tcard-stars">★★★★★</div>
                     <p class="tcard-text">
-                        Replace with real review. Outstanding WPF developer. Took over a legacy codebase and
-                        modernized it to .NET 8 without breaking a single feature. Communication was excellent
-                        throughout — clear updates, realistic estimates, zero surprises.
+                        Replace with real review. Outstanding WPF developer. Took over a
+                        legacy codebase and modernized it to .NET 8 without breaking a
+                        single feature. Communication was excellent throughout — clear
+                        updates, realistic estimates, zero surprises.
                     </p>
                     <div class="tcard-sep"></div>
                     <div class="tcard-author">
@@ -1701,31 +2260,33 @@
                         <span class="tcard-upwork">Upwork</span>
                     </div>
                 </div>
-
                 <div class="tcard">
                     <div class="tcard-stars">★★★★★</div>
                     <p class="tcard-text">
-                        Replace with real review. We needed a complex kiosk UI built from scratch with very tight
-                        deadlines. Alexey not only delivered on time but proposed UI improvements we hadn't thought
-                        of. Will hire again without hesitation.
+                        Replace with real review. We needed a complex kiosk UI built from
+                        scratch with very tight deadlines. Alexey not only delivered on
+                        time but proposed UI improvements we hadn't thought of. Will hire
+                        again without hesitation.
                     </p>
                     <div class="tcard-sep"></div>
                     <div class="tcard-author">
                         <div class="tcard-avatar">KL</div>
                         <div>
                             <div class="tcard-name">Klaus L.</div>
-                            <div class="tcard-meta">Technical Director · Retail Group, Germany</div>
+                            <div class="tcard-meta">
+                                Technical Director · Retail Group, Germany
+                            </div>
                         </div>
                         <span class="tcard-upwork">Upwork</span>
                     </div>
                 </div>
-
                 <div class="tcard">
                     <div class="tcard-stars">★★★★★</div>
                     <p class="tcard-text">
-                        Replace with real review. Exceptional work on our SCADA dashboard. Deep understanding of
-                        both .NET architecture and industrial requirements. The code quality is some of the best
-                        I've seen from a contractor — clean, tested, maintainable.
+                        Replace with real review. Exceptional work on our SCADA dashboard.
+                        Deep understanding of both .NET architecture and industrial
+                        requirements. The code quality is some of the best I've seen from
+                        a contractor — clean, tested, maintainable.
                     </p>
                     <div class="tcard-sep"></div>
                     <div class="tcard-author">
@@ -1737,38 +2298,42 @@
                         <span class="tcard-upwork">Upwork</span>
                     </div>
                 </div>
-
                 <div class="tcard">
                     <div class="tcard-stars">★★★★★</div>
                     <p class="tcard-text">
-                        Replace with real review. Hired for a Xamarin to MAUI migration. The project was complex
-                        with lots of custom controls and third-party integrations. Alexey handled everything
-                        professionally and the new app runs beautifully on all platforms.
+                        Replace with real review. Hired for a Xamarin to MAUI migration.
+                        Complex custom controls and third-party integrations — Alexey
+                        handled everything professionally and the new app runs beautifully
+                        on all platforms.
                     </p>
                     <div class="tcard-sep"></div>
                     <div class="tcard-author">
                         <div class="tcard-avatar">MC</div>
                         <div>
                             <div class="tcard-name">Marco C.</div>
-                            <div class="tcard-meta">Founder · SaaS Startup, Switzerland</div>
+                            <div class="tcard-meta">
+                                Founder · SaaS Startup, Switzerland
+                            </div>
                         </div>
                         <span class="tcard-upwork">Upwork</span>
                     </div>
                 </div>
-
                 <div class="tcard">
                     <div class="tcard-stars">★★★★★</div>
                     <p class="tcard-text">
-                        Replace with real review. We integrated an AI assistant into our existing WPF enterprise
-                        tool. Alexey set up Semantic Kernel and local LLM inference — the whole thing runs
-                        on-premise with no data leaving our network. Impressive work.
+                        Replace with real review. We integrated an AI assistant into our
+                        existing WPF enterprise tool. Alexey set up Semantic Kernel and
+                        local LLM inference — the whole thing runs on-premise with no data
+                        leaving our network. Impressive work.
                     </p>
                     <div class="tcard-sep"></div>
                     <div class="tcard-author">
                         <div class="tcard-avatar">DV</div>
                         <div>
                             <div class="tcard-name">Daniel V.</div>
-                            <div class="tcard-meta">IT Director · Financial Services, Belgium</div>
+                            <div class="tcard-meta">
+                                IT Director · Financial Services, Belgium
+                            </div>
                         </div>
                         <span class="tcard-upwork">Upwork</span>
                     </div>
@@ -1791,49 +2356,67 @@
             <div class="stack-row">
                 <div class="stack-row-label">Core</div>
                 <div class="stack-tags">
-                    <span class="tag accent">C#</span><span class="tag accent">.NET 8 / 9 / 10</span><span
-                          class="tag accent">WPF</span><span class="tag accent">XAML</span><span
-                          class="tag accent">MVVM</span> <span class="tag">Prism</span><span
-                          class="tag">CommunityToolkit.Mvvm</span><span class="tag">ReactiveUI</span>
+                    <span class="tag accent">C#</span>
+                    <span class="tag accent">.NET 8 / 9 / 10</span>
+                    <span class="tag accent">WPF</span>
+                    <span class="tag accent">XAML</span>
+                    <span class="tag accent">MVVM</span>
+                    <span class="tag">Prism</span>
+                    <span class="tag">CommunityToolkit.Mvvm</span>
+                    <span class="tag">ReactiveUI</span>
                 </div>
             </div>
             <div class="stack-row">
                 <div class="stack-row-label">Cross-Platform</div>
                 <div class="stack-tags">
-                    <span class="tag">Avalonia UI</span><span class="tag">.NET MAUI</span><span class="tag">Uno
-                        Platform</span>
+                    <span class="tag">Avalonia UI</span>
+                    <span class="tag">.NET MAUI</span>
+                    <span class="tag">Uno Platform</span>
                 </div>
             </div>
             <div class="stack-row">
                 <div class="stack-row-label">UI Frameworks</div>
                 <div class="stack-tags">
-                    <span class="tag">Telerik UI for WPF</span><span class="tag">DevExpress</span><span
-                          class="tag">Syncfusion</span><span class="tag">Figma</span>
+                    <span class="tag">Telerik UI for WPF</span>
+                    <span class="tag">DevExpress</span>
+                    <span class="tag">Syncfusion</span>
+                    <span class="tag">Figma</span>
                 </div>
             </div>
             <div class="stack-row">
                 <div class="stack-row-label">Data &amp; Backend</div>
                 <div class="stack-tags">
-                    <span class="tag">Entity Framework Core</span><span class="tag">Dapper</span><span class="tag">SQL
-                        Server</span><span class="tag">SQLite</span><span class="tag">REST</span><span
-                          class="tag">gRPC</span>
+                    <span class="tag">Entity Framework Core</span>
+                    <span class="tag">Dapper</span>
+                    <span class="tag">SQL Server</span>
+                    <span class="tag">SQLite</span>
+                    <span class="tag">REST</span>
+                    <span class="tag">gRPC</span>
                 </div>
             </div>
             <div class="stack-row">
                 <div class="stack-row-label">AI &amp; ML</div>
                 <div class="stack-tags">
-                    <span class="tag accent">Semantic Kernel</span><span class="tag accent">ML.NET</span><span
-                          class="tag accent">ONNX Runtime</span> <span class="tag">OpenAI API</span><span
-                          class="tag">Anthropic API</span><span class="tag">Ollama</span>
-                    <span class="tag">Azure OpenAI</span><span class="tag">Whisper STT</span><span class="tag">Claude
-                        Code</span><span class="tag">GitHub Copilot</span>
+                    <span class="tag accent">Semantic Kernel</span>
+                    <span class="tag accent">ML.NET</span>
+                    <span class="tag accent">ONNX Runtime</span>
+                    <span class="tag">OpenAI API</span>
+                    <span class="tag">Anthropic API</span>
+                    <span class="tag">Ollama</span>
+                    <span class="tag">Azure OpenAI</span>
+                    <span class="tag">Whisper STT</span>
+                    <span class="tag">Claude Code</span>
+                    <span class="tag">GitHub Copilot</span>
                 </div>
             </div>
             <div class="stack-row">
                 <div class="stack-row-label">DevOps &amp; Tools</div>
                 <div class="stack-tags">
-                    <span class="tag">Azure DevOps</span><span class="tag">Git / GitHub</span><span class="tag">Visual
-                        Studio</span><span class="tag">xUnit</span><span class="tag">NUnit</span>
+                    <span class="tag">Azure DevOps</span>
+                    <span class="tag">Git / GitHub</span>
+                    <span class="tag">Visual Studio</span>
+                    <span class="tag">xUnit</span>
+                    <span class="tag">NUnit</span>
                 </div>
             </div>
         </div>
@@ -1867,13 +2450,19 @@
         <div>
             <div class="section-tag">Let's work together</div>
             <h2>Start a project</h2>
-            <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.9; margin-top: 1rem">
-                Available for full-time engagement or fixed-price projects. Flexible with US and EU time zones. I
-                respond to every inquiry personally, usually within 24 hours.
+            <p style="
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.9;
+            margin-top: 1rem;
+          ">
+                Available for full-time engagement or fixed-price projects. Flexible
+                with US and EU time zones. I respond to every inquiry personally,
+                usually within 24 hours.
             </p>
             <p class="contact-note">
-                Preferred first contact: Upwork (for new clients) or direct email. I review every message myself —
-                no assistant, no auto-responder.
+                Preferred first contact: Upwork (for new clients) or direct email. I
+                review every message myself — no assistant, no auto-responder.
             </p>
         </div>
         <div>
@@ -1883,12 +2472,12 @@
                    target="_blank">
                     <div class="contact-link-icon"
                          style="
-                                background: rgba(20, 176, 82, 0.1);
-                                color: #14b052;
-                                font-size: 16px;
-                                font-weight: 700;
-                                font-family: var(--mono);
-                            ">
+                background: rgba(20, 176, 82, 0.1);
+                color: #14b052;
+                font-size: 16px;
+                font-weight: 700;
+                font-family: var(--mono);
+              ">
                         U
                     </div>
                     <div>
@@ -1899,7 +2488,6 @@
                 </a>
                 <a class="contact-link"
                    href="mailto:your@email.com">
-                    <!-- Replace href with your real email -->
                     <div class="contact-link-icon"
                          style="background: rgba(0, 200, 160, 0.08); color: var(--accent)">
                         ✉
@@ -1913,7 +2501,6 @@
                 <a class="contact-link"
                    href="https://t.me/yourusername"
                    target="_blank">
-                    <!-- Replace with your real Telegram -->
                     <div class="contact-link-icon"
                          style="background: rgba(0, 119, 255, 0.1); color: #4d9fff">
                         ✈
@@ -1935,18 +2522,118 @@
     </footer>
 
     <script>
-        const obs = new IntersectionObserver(
+        // ── PARTICLES ──
+        const canvas = document.getElementById("hero-canvas");
+        const ctx = canvas.getContext("2d");
+        let W,
+            H,
+            particles = [];
+
+        function resize() {
+            W = canvas.width = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        const N = 70;
+        for (let i = 0; i < N; i++) {
+            particles.push({
+                x: Math.random() * 1600,
+                y: Math.random() * 900,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                r: Math.random() * 1.5 + 0.5,
+            });
+        }
+
+        let mouse = { x: -999, y: -999 };
+        window.addEventListener("mousemove", (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, W, H);
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > W) p.vx *= -1;
+                if (p.y < 0 || p.y > H) p.vy *= -1;
+                const dx = p.x - mouse.x,
+                    dy = p.y - mouse.y;
+                const md = Math.sqrt(dx * dx + dy * dy);
+                if (md < 120) {
+                    p.x += (dx / md) * 0.5;
+                    p.y += (dy / md) * 0.5;
+                }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(0,200,160,.35)";
+                ctx.fill();
+                for (let j = i + 1; j < particles.length; j++) {
+                    const q = particles[j];
+                    const dx2 = p.x - q.x,
+                        dy2 = p.y - q.y;
+                    const d = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+                    if (d < 140) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(q.x, q.y);
+                        ctx.strokeStyle = `rgba(0,200,160,${(1 - d / 140) * 0.12})`;
+                        ctx.lineWidth = 0.6;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+
+        // ── SCROLL ANIMATIONS ──
+        const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((e) => {
                     if (e.isIntersecting) {
                         e.target.classList.add("visible");
-                        obs.unobserve(e.target);
+                        observer.unobserve(e.target);
                     }
                 });
             },
             { threshold: 0.08 },
         );
-        document.querySelectorAll(".fade-in").forEach((el) => obs.observe(el));
+        document
+            .querySelectorAll(".fade-in,.slide-left,.slide-right,.stagger")
+            .forEach((el) => observer.observe(el));
+
+        // ── COUNTER ANIMATION ──
+        function animateCounter(el) {
+            const target = parseInt(el.dataset.target);
+            const suffix = el.dataset.suffix || "+";
+            const dur = 1200;
+            const start = performance.now();
+            function step(now) {
+                const p = Math.min((now - start) / dur, 1);
+                const ease = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.floor(ease * target) + suffix;
+                if (p < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+        const counterObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((e) => {
+                    if (e.isIntersecting) {
+                        document.querySelectorAll(".counter").forEach(animateCounter);
+                        counterObserver.disconnect();
+                    }
+                });
+            },
+            { threshold: 0.5 },
+        );
+        const firstCounter = document.querySelector(".counter");
+        if (firstCounter) counterObserver.observe(firstCounter);
     </script>
 </body>
 
